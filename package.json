@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "vue": "^3.5.22"
   },
   "devDependencies": {
@@ -20,3 +21,4 @@
     "vite-plugin-vue-devtools": "^8.0.2"
   }
 }
+
