@@ -1,15 +1,24 @@
+<script setup>
+const props = defineProps({
+  category: String,
+  title: String,
+  image: String,
+  createdBy: String,
+});
+</script>
+
 <template>
   <div class="card">
     <img
-      src="https://placehold.co/600x400"
+      :src="props.image"
       class="card-img-top"
-      alt="Beef Wellington"
+      :alt="props.title"
     />
     <div class="card-body">
-      <p class="fs-6 mb-0">Dinner</p>
-      <h5 class="card-title mb-3 fw-bolder">Beef Wellington</h5>
+      <p class="fs-6 mb-0">{{ props.category }}</p>
+      <h5 class="card-title mb-3 fw-bolder">{{ props.title }}</h5>
       <p class="card-text">
-        Recipe By <span class="fw-semibold">Gordon Ramsay</span>
+        Recipe By <span class="fw-semibold">{{ props.createdBy }}</span>
       </p>
     </div>
   </div>
