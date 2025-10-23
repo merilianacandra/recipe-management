@@ -11,7 +11,7 @@ const props = defineProps({
   <div class="card">
     <img
       :src="props.image"
-      class="card-img-top"
+      class="card-img-top recipe-image"
       :alt="props.title"
     />
     <div class="card-body">
@@ -23,3 +23,11 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+
+<style scoped>
+.recipe-image {
+  height: 180px;
+  object-fit: cover;
+}
+</style>
