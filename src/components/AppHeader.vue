@@ -2,10 +2,10 @@
   <header class="px-5 py-3 border-bottom mb-4 shawdow">
     <div class="d-flex justify-content-between align-items-center">
       <img src="/public/images/logo.png" alt="Tasty Recipes" class="header-logo" />
-      <a href="/" class="header-signup">
+      <RouterLink to="/signup" class="header-signup">
         <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
         <span class="header-text">Sign Up</span>
-      </a>
+      </RouterLink>
     </div>
   </header>
 </template>
