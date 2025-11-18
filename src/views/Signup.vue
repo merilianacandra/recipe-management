@@ -17,7 +17,7 @@ import UiInput from "@/components/UiInput.vue";
           <UiInput id="confirm-password" type="password" title="Confirm Password" />
         </form>
         <div class="text-center">
-            <p class="mt-0">Already have account? Sign In</p>
+            <p class="mt-0">Already have account? <RouterLink to="/login">Sign In</RouterLink></p>
             <button class="btn btn-primary w-100" type="submit">
                 Sign Up
             </button>

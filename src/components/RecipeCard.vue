@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <router-link class="recipe-card" :to="'/recipe/' + props.id">
+  <RouterLink class="recipe-card" :to="'/recipe/' + props.id">
     <div class="card">
       <img
         :src="props.image"
@@ -24,7 +24,7 @@ const props = defineProps({
         </p>
       </div>
     </div>
-  </router-link>
+  </RouterLink>
 </template>
 
 <style scoped>
