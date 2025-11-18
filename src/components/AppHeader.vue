@@ -1,7 +1,13 @@
 <template>
   <header class="px-5 py-3 border-bottom mb-4 shawdow">
     <div class="d-flex justify-content-between align-items-center">
-      <img src="/public/images/logo.png" alt="Tasty Recipes" class="header-logo" />
+      <RouterLink to="/">
+        <img
+          src="/public/images/logo.png"
+          alt="Tasty Recipes"
+          class="header-logo"
+        />
+      </RouterLink>
       <RouterLink to="/signup" class="header-signup">
         <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
         <span class="header-text">Sign Up</span>
@@ -32,6 +38,6 @@
 .header-text {
   font-size: 16px;
   font-weight: 500;
-  color: #5C3E94;
+  color: #5c3e94;
 }
 </style>
