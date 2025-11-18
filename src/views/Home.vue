@@ -53,7 +53,7 @@ const recipes = [
     <!-- Recipe List -->
     <div class="row gy-4">
       <div class="col-sm-6 col-md-4 col-lg-3" v-for="item in recipes" :key="item.id">
-        <RecipeCard :title="item.title" :category="item.category" :image="item.image" :createdBy="item.createdBy" />
+        <RecipeCard :title="item.title" :category="item.category" :image="item.image" :createdBy="item.createdBy" :id="item.id"/>
       </div>
     </div>
   </div>    

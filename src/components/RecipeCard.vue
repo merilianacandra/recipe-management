@@ -4,30 +4,36 @@ const props = defineProps({
   title: String,
   image: String,
   createdBy: String,
+  id: Number,
 });
 </script>
 
 <template>
-  <div class="card">
-    <img
-      :src="props.image"
-      class="card-img-top recipe-image"
-      :alt="props.title"
-    />
-    <div class="card-body">
-      <p class="fs-6 mb-0">{{ props.category }}</p>
-      <h5 class="card-title mb-3 fw-bolder">{{ props.title }}</h5>
-      <p class="card-text">
-        Recipe By <span class="fw-semibold">{{ props.createdBy }}</span>
-      </p>
+  <router-link class="recipe-card" :to="'/recipe/' + props.id">
+    <div class="card">
+      <img
+        :src="props.image"
+        class="card-img-top recipe-image"
+        :alt="props.title"
+      />
+      <div class="card-body">
+        <p class="fs-6 mb-0">{{ props.category }}</p>
+        <h5 class="card-title mb-3 fw-bolder">{{ props.title }}</h5>
+        <p class="card-text">
+          Recipe By <span class="fw-semibold">{{ props.createdBy }}</span>
+        </p>
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
-
 
 <style scoped>
 .recipe-image {
   height: 180px;
   object-fit: cover;
+}
+
+.recipe-card {
+  text-decoration: none;
 }
 </style>
