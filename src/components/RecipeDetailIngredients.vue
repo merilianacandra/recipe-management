@@ -1,3 +1,8 @@
+<script setup>
+const props = defineProps({
+  ingredients: Object
+})
+</script>
 <template>
   <div class="my-3">
     <div class="card">
@@ -6,7 +11,7 @@
       </div>
       <div class="card-body">
         <ul class="mb-0">
-          <li></li>
+          <li v-for="ingredient in props.ingredients">{{ ingredient }}</li>
         </ul>
       </div>
     </div>

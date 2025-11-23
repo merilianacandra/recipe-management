@@ -1,3 +1,8 @@
+<script setup>
+const props = defineProps({
+  directions: Object
+})
+</script>
 <template>
   <div class="my-3">
     <div class="card">
@@ -5,9 +10,9 @@
         <p class="fs-4 my-0 fw-semibold">Directions</p>
       </div>
       <div class="card-body">
-        <div>
-          <p class="my-2 fs-5 fw-semibold">Step ...</p>
-          <p class="my-2"></p>
+        <div v-for="(direction, index) in props.directions">
+          <p class="my-2 fs-5 fw-semibold">Step {{ index + 1 }}</p>
+          <p class="my-2">{{ direction }}</p>
         </div>
       </div>
     </div>
