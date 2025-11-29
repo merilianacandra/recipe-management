@@ -1,5 +1,16 @@
 <script setup>
 import UiInput from "@/components/UiInput.vue";
+import { ref } from "vue";
+
+const signUpData = ref({
+  email: "",
+  confirPassword: "",
+  password: "",
+});
+
+const submit = () => {
+  alert(`Your Email : ${signUpData.value.email}`);
+};
 </script>
 <template>
   <div class="row justify-content-center">
@@ -11,17 +22,22 @@ import UiInput from "@/components/UiInput.vue";
             Enter your details to use all the app features
           </p>
         </div>
-        <form>
-          <UiInput id="email" type="email" title="Email Address" />
-          <UiInput id="password" type="password" title="Password" />
-          <UiInput id="confirm-password" type="password" title="Confirm Password" />
+        <form @submit.prevent="submit">
+          <UiInput id="email" type="email" title="Email Address" v-model="signUpData.email"/>
+          <UiInput id="password" type="password" title="Password" v-model="signUpData.password"/>
+          <UiInput
+            id="confirm-password"
+            type="password"
+            title="Confirm Password"
+            v-model="signUpData.confirPassword"
+          />
+          <div class="text-center">
+            <p class="mt-0">
+              Already have account? <RouterLink to="/login">Sign In</RouterLink>
+            </p>
+            <button class="btn btn-primary w-100" type="submit">Sign Up</button>
+          </div>
         </form>
-        <div class="text-center">
-            <p class="mt-0">Already have account? <RouterLink to="/login">Sign In</RouterLink></p>
-            <button class="btn btn-primary w-100" type="submit">
-                Sign Up
-            </button>
-        </div>
       </div>
     </div>
   </div>
