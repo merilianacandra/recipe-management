@@ -1,5 +1,6 @@
 <script setup>
 import UiInput from "@/components/UiInput.vue";
+import UiButton from "@/components/UiButton.vue";
 </script>
 <template>
   <div class="row justify-content-center">
@@ -12,14 +13,13 @@ import UiInput from "@/components/UiInput.vue";
           </p>
         </div>
         <form>
-          <UiInput id="email" type="email" title="Email Address" />
-          <UiInput id="password" type="password" title="Password" />
+          <UiInput id="email" type="email" title="Email Address" placeholder="Email Address" />
+          <UiInput id="password" type="password" title="Password" placeholder="Password" />
         </form>
         <div class="text-center">
-            <button class="btn btn-primary w-100" type="submit">
-                Sign In
-            </button>
-            <p class="mt-3">Don't have an account? <RouterLink to="/signup">Sign Up</RouterLink></p>
+          <UiButton title="Sign In" type="submit" />
+          <p class="mt-3">Don't have an account? <RouterLink to="/signup" class="sign-up">Sign Up</RouterLink>
+          </p>
         </div>
       </div>
     </div>
@@ -31,8 +31,19 @@ import UiInput from "@/components/UiInput.vue";
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .signin-description {
   font-size: 16px;
   color: #666;
+}
+
+.sign-up {
+  color: #5c3e94;
+  text-decoration: none;
+  transition: font-weight .3s ease;
+}
+
+.sign-up:hover {
+  font-weight: 600;
 }
 </style>

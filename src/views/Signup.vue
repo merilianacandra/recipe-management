@@ -1,5 +1,6 @@
 <script setup>
 import UiInput from "@/components/UiInput.vue";
+import UiButton from "@/components/UiButton.vue";
 </script>
 <template>
   <div class="row justify-content-center">
@@ -12,15 +13,23 @@ import UiInput from "@/components/UiInput.vue";
           </p>
         </div>
         <form>
-          <UiInput id="email" type="email" title="Email Address" />
-          <UiInput id="password" type="password" title="Password" />
-          <UiInput id="confirm-password" type="password" title="Confirm Password" />
+          <div class="row">
+            <div class="col-6">
+              <UiInput id="firstname" type="text" title="First Name" placeholder="First Name" />
+            </div>
+            <div class="col-6">
+              <UiInput id="lastname" type="text" title="Last Name" placeholder="Last Name" />
+            </div>
+          </div>
+          <UiInput id="email" type="email" title="Email Address" placeholder="Email Address" />
+          <UiInput id="password" type="password" title="Password" placeholder="Password" />
+          <UiInput id="confirm-password" type="password" title="Confirm Password" placeholder="Confirm Password" />
         </form>
         <div class="text-center">
-            <p class="mt-0">Already have account? <RouterLink to="/login">Sign In</RouterLink></p>
-            <button class="btn btn-primary w-100" type="submit">
-                Sign Up
-            </button>
+          <p class="mt-0">Already have account? <RouterLink to="/login" class="sign-in">Sign In</RouterLink>
+          </p>
+          <UiButton title="Sign Up" type="submit"/>
+
         </div>
       </div>
     </div>
@@ -32,8 +41,19 @@ import UiInput from "@/components/UiInput.vue";
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .signup-description {
   font-size: 16px;
   color: #666;
+}
+
+.sign-in {
+  color: #5c3e94;
+  text-decoration: none;
+  transition: font-weight .3s ease;
+}
+
+.sign-in:hover {
+  font-weight: 600;
 }
 </style>
