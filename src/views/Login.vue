@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import UiInput from "@/components/UiInput.vue";
+import UiButton from "@/components/UiButton.vue";
 
 const signInData = ref({
   email: "",
@@ -23,29 +24,17 @@ const submit = () => {
           </p>
         </div>
         <form @submit.prevent="submit">
-          <UiInput
-            id="email"
-            type="email"
-            title="Email Address"
-            v-model="signInData.email"
-            placeholder="Your Email"
-          />
-          <UiInput
-            id="password"
-            type="password"
-            title="Password"
-            v-model="signInData.password"
-            placeholder="Your Password"
-          />
+          <UiInput id="email" type="email" title="Email Address" v-model="signInData.email" placeholder="Your Email" />
+          <UiInput id="password" type="password" title="Password" v-model="signInData.password"
+            placeholder="Your Password" />
 
           <div class="text-center">
-            <button class="btn btn-primary w-100" type="submit">Sign In</button>
-            <p class="mt-3">
-              Don't have an account?
-              <RouterLink to="/signup">Sign Up</RouterLink>
+            <UiButton title="Sign In" type="submit" />
+            <p class="mt-3">Don't have an account? <RouterLink to="/signup" class="sign-up">Sign Up</RouterLink>
             </p>
           </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -56,8 +45,19 @@ const submit = () => {
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .signin-description {
   font-size: 16px;
   color: #666;
+}
+
+.sign-up {
+  color: #5c3e94;
+  text-decoration: none;
+  transition: font-weight .3s ease;
+}
+
+.sign-up:hover {
+  font-weight: 600;
 }
 </style>

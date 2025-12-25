@@ -6,8 +6,8 @@ import Login from './views/Login.vue';
 const routes = [
   { path: '/', component: Home },
   { path: '/signup', component: Signup },
-  { path: '/recipe/:id', component: RecipeDetail },
   { path: '/login', component: Login },
+  { path: '/recipe/:id', component: RecipeDetail },
 
 ]
 
