@@ -2,45 +2,53 @@
 import UiInput from "@/components/UiInput.vue";
 import { ref } from "vue";
 import UiButton from "@/components/UiButton.vue";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
 
-const signUpData = ref({
-  email: "",
-  confirPassword: "",
-  password: "",
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    email: yup
+      .string()
+      .required("Email wajib diisi!")
+      .email("Format Email Salah!"),
+    password: yup
+      .string()
+      .required("Password wajib diisi!")
+      .min(8, "Password minimal 6 karakter!"),
+  }),
 });
 
-const submit = () => {
-  alert(`Your Email : ${signUpData.value.email}`);
-};
+const submit = handleSubmit((values) => {
+  alert(JSON.stringify(values, null, 2));
+});
 </script>
 <template>
-  <div class="row justify-content-center">
-    <div class="col-lg-5">
-      <div class="p-5 bg-white rounded-3 shadow">
-        <div class="text-center mb-4">
-          <h1 class="signup-title">Create Your Account</h1>
-          <p class="signup-description">
-            Enter your details to use all the app features
-          </p>
-        </div>
-        <form>
-          <div class="row">
-            <div class="col-6">
-              <UiInput id="firstname" type="text" title="First Name" placeholder="First Name" />
-            </div>
-            <div class="col-6">
-              <UiInput id="lastname" type="text" title="Last Name" placeholder="Last Name" />
-            </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        <div class="p-5 bg-white rounded-3 shadow">
+          <div class="text-center mb-4">
+            <h1 class="signup-title">Create Your Account</h1>
+            <p class="signup-description">
+              Enter your details to use all the app features
+            </p>
           </div>
-          <UiInput id="email" type="email" title="Email Address" placeholder="Email Address" />
-          <UiInput id="password" type="password" title="Password" placeholder="Password" />
-          <UiInput id="confirm-password" type="password" title="Confirm Password" placeholder="Confirm Password" />
-        </form>
-        <div class="text-center">
-          <p class="mt-0">Already have account? <RouterLink to="/login" class="sign-in">Sign In</RouterLink>
-          </p>
-          <UiButton title="Sign Up" type="submit"/>
+          <form @submit.prevent="submit">
+            <UiInput id="firstname" type="text" title="First Name" name="firstname" class="mb-3" />
 
+            <UiInput id="lastname" type="text" title="Last Name" name="lastname" class="mb-3" />
+
+            <UiInput id="email" type="email" title="Email Address" name="email" class="mb-3" />
+
+            <UiInput id="password" type="password" title="Password" name="password" class="mb-3" />
+
+            <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword" />
+            <div class="text-center">
+              <p class="mt-0">Already have account? <RouterLink to="/login" class="sign-in">Sign In</RouterLink>
+              </p>
+              <UiButton title="Sign Up" type="submit" />
+            </div>
+          </form>
         </div>
       </div>
     </div>
