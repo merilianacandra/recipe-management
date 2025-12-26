@@ -24,7 +24,7 @@ const { handleSubmit } = useForm({
 });
 
 const submit = handleSubmit((values) => {
-  alert(JSON.stringify(values, null, 2));
+  alert(`Your Email: ${values.email}`);
 });
 </script>
 
@@ -41,7 +41,7 @@ const submit = handleSubmit((values) => {
           </div>
           <form @submit.prevent="submit">
             <UiInput id="email" type="email" title="Email Address" placeholder="Your Email" name="email" class="mb-3" />
-            <UiInput id="password" type="password" title="Password" placeholder="Your Password" name="password" />
+            <UiInput id="password" type="password" title="Password" placeholder="Your Password" name="password" class="mb-3" />
 
             <div class="text-center">
               <UiButton title="Sign In" type="submit" />

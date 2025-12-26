@@ -31,5 +31,4 @@ const { value, errorMessage } = useField(() => props.name);
   color: #DC0000;
   font-size: 12px;
 }
-
 </style>
