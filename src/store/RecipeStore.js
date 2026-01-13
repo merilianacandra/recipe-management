@@ -6,6 +6,7 @@ export const useRecipeStore = defineStore("recipe", () => {
   // state
   const recipes = ref([]);
   const isLoading = ref(false);
+  const recipe = ref({})
 
   // getters
   const getRecipeById = computed(() => {
@@ -30,10 +31,24 @@ export const useRecipeStore = defineStore("recipe", () => {
     }
   }
 
+  const getRecipeDetail = async (id) => {
+    try {
+      isLoading.value = true
+      const response = await axios.get(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${id}.json`)
+      recipe.value = response.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     recipes,
     getRecipeById,
     isLoading,
-    getRecipes
+    getRecipes,
+    getRecipeDetail,
+    recipe
   };
 });

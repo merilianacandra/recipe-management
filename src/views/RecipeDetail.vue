@@ -8,10 +8,11 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 
 const store = useRecipeStore();
-const { getRecipeById } = storeToRefs(store);
+const { recipe } = storeToRefs(store);
 const route = useRoute();
-const id = Number(route.params.id);
-const recipe = getRecipeById.value(id);
+// const id = Number(route.params.id);
+
+store.getRecipeDetail(route.params.id)
 </script>
 
 <template>
@@ -33,3 +34,4 @@ const recipe = getRecipeById.value(id);
     </div>
   </div>
 </template>
+ 
