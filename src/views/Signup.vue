@@ -21,6 +21,16 @@ const { handleSubmit } = useForm({
       .string()
       .required("Password wajib diisi!")
       .min(8, "Password minimal 6 karakter!"),
+    firstname: yup
+      .string()
+      .required('Firstname wajib diisi!'),
+    lastname: yup
+      .string()
+      .required('Firstname wajib diisi!'),
+    confirmPassword: yup
+      .string()
+      .required('Confirm Password wajib diisi!')
+      .oneOf([yup.ref('password')], 'Passwords tidak cocok'),
   }),
 });
 
@@ -48,14 +58,10 @@ const submit = handleSubmit((values) => {
           </div>
           <form @submit.prevent="submit">
             <UiInput id="firstname" type="text" title="First Name" name="firstname" class="mb-3" />
-
             <UiInput id="lastname" type="text" title="Last Name" name="lastname" class="mb-3" />
-
             <UiInput id="email" type="email" title="Email Address" name="email" class="mb-3" />
-
             <UiInput id="password" type="password" title="Password" name="password" class="mb-3" />
-
-            <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword" />
+            <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword" class="mb-3"/>
             <div class="text-center">
               <p class="mt-0">Already have account? <RouterLink to="/login" class="sign-in">Sign In</RouterLink>
               </p>
