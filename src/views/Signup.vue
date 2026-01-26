@@ -11,6 +11,9 @@ import CheckedJSON from '@/assets/lottie/Checked.json'
 import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
 
+import { useAuthStore } from '@/store/AuthStore';
+import { storeToRefs } from 'pinia';
+
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
     email: yup
@@ -36,13 +39,20 @@ const { handleSubmit } = useForm({
 
 const modal = ref(null)
 
+const store = useAuthStore()
+
 onMounted(() => {
   const el = document.getElementById("signupModal")
   modal.value = new Modal(el)
 })
 
-const submit = handleSubmit((values) => {
-  modal.value.show()
+const submit = handleSubmit(async (values) => {
+  try {
+    await store.signUp(values);
+    modal.value.show();
+  } catch (err) {
+    console.log(err.message)
+  }
 });
 </script>
 <template>
@@ -61,7 +71,8 @@ const submit = handleSubmit((values) => {
             <UiInput id="lastname" type="text" title="Last Name" name="lastname" class="mb-3" />
             <UiInput id="email" type="email" title="Email Address" name="email" class="mb-3" />
             <UiInput id="password" type="password" title="Password" name="password" class="mb-3" />
-            <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword" class="mb-3"/>
+            <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword"
+              class="mb-3" />
             <div class="text-center">
               <p class="mt-0">Already have account? <RouterLink to="/login" class="sign-in">Sign In</RouterLink>
               </p>
@@ -76,16 +87,9 @@ const submit = handleSubmit((values) => {
   <UiModal id="signupModal">
     <Vue3Lottie :animationData="CheckedJSON" :height="200" :width="200" />
     <div class="text-center mb-4">
-      <h2>Berhasil Masuk!</h2>
-      <p>Selamat! Anda telah berhasil masuk ke akun Anda.</p>
-    </div>
-    <div class="row justify-content-center mb-4">
-      <div class="col-4">
-        <RouterLink to="/" class="btn w-100 btn-ui-color-solid">Profile</RouterLink>
-      </div>
-      <div class="col-4">
-        <RouterLInk to="/" class="btn w-100 btn-ui-color-outline">Home</RouterLInk>
-      </div>
+      <h2>Pendaftaran Berhasil!</h2>
+      <p>Selamat! Akun Anda telah berhasil dibuat. Silakan <RouterLink to="/login">Login</RouterLink> menggunakan email dan kata sandi yang telah Anda
+        daftarkan.</p>
     </div>
   </UiModal>
 </template>
