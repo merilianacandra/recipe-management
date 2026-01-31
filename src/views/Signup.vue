@@ -12,7 +12,6 @@ import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
 
 import { useAuthStore } from '@/store/AuthStore';
-import { storeToRefs } from 'pinia';
 
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
@@ -51,7 +50,7 @@ const submit = handleSubmit(async (values) => {
     await store.signUp(values);
     modal.value.show();
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message) 
   }
 });
 </script>
