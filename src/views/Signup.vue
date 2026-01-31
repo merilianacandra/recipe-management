@@ -88,7 +88,7 @@ const submit = handleSubmit(async (values) => {
     <Vue3Lottie :animationData="CheckedJSON" :height="200" :width="200" />
     <div class="text-center mb-4">
       <h2>Pendaftaran Berhasil!</h2>
-      <p>Selamat! Akun Anda telah berhasil dibuat. Silakan <RouterLink to="/login">Login</RouterLink> menggunakan email dan kata sandi yang telah Anda
+      <p>Selamat! Akun Anda telah berhasil dibuat. Silakan <RouterLink to="/login" @click="modal.hide()">Login</RouterLink> menggunakan email dan kata sandi yang telah Anda
         daftarkan.</p>
     </div>
   </UiModal>

@@ -6,7 +6,6 @@ export const useAuthStore = defineStore("auth", () => {
     const isLoading = ref(false);
 
     const postUserData = async (userData, userToken) => {
-
         await axios.post(`${import.meta.env.VITE_FIREBASE_URL}/users.json?auth=${userToken}`, userData)
     }
 
