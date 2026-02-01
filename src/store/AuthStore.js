@@ -39,8 +39,27 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    const signIn = async (data) => {
+        try {
+            isLoading.value = true
+            const response = await axios.post(
+                import.meta.env.VITE_SIGNIN_URL,
+                {
+                    email: data.email,
+                    password: data.password,
+                    returnSecureToken: true
+                }
+            )
+        } catch (error) {
+            throw error
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
     return {
         isLoading,
-        signUp
+        signUp,
+        signIn
     }
 })

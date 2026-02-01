@@ -11,6 +11,7 @@ import CheckedJSON from '@/assets/lottie/Checked.json'
 import { onMounted, ref } from "vue";
 import { Modal } from "bootstrap";
 
+import { useAuthStore } from '@/store/AuthStore';
 
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
@@ -26,14 +27,20 @@ const { handleSubmit } = useForm({
 });
 
 const modal = ref(null)
+const store = useAuthStore()
 
 onMounted(() => {
   const el = document.getElementById("loginModal")
   modal.value = new Modal(el)
 })
 
-const submit = handleSubmit((values) => {
-  modal.value.show()
+const submit = handleSubmit(async (values) => {
+  try {
+    await store.signIn(values);
+    modal.value.show();
+  } catch (err) {
+    console.log(err.message)
+  }
 });
 </script>
 
