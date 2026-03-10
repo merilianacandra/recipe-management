@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const useAuthStore = defineStore("auth", () => {
-    const isLoading = ref(false);
+    const isLoading = ref(false)
+    const userData = ref({})
 
     const postUserData = async (userData, userToken) => {
         await axios.post(`${import.meta.env.VITE_FIREBASE_URL}/users.json?auth=${userToken}`, userData)
@@ -50,6 +52,17 @@ export const useAuthStore = defineStore("auth", () => {
                     returnSecureToken: true
                 }
             )
+
+            const userToken = response.data.idToken
+            const userId = response.data.localId
+            const expiresIn = Date.now() + 60 * 60 * 1000
+
+            Cookies.set('userToken', userToken)
+            Cookies.set('userId', userId)
+            Cookies.set('expiresIn', expiresIn)
+
+            await getUser(userToken, userId)
+
         } catch (error) {
             throw error
         } finally {
@@ -57,9 +70,30 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    const getUser = async (userToken, userId) => {
+        try {
+            isLoading.value = true
+            const response = await axios.get(`${import.meta.env.VITE_FIREBASE_URL}/users.json?auth=${userToken}`)
+
+            // Response Mapping
+            for (let key in response.data) {
+                 const data = { id: key, ...response.data[key] }
+                if (data.userId === userId) {
+                    userData.value = data
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            isLoading.value = false
+        }
+    }
+
     return {
         isLoading,
         signUp,
-        signIn
+        signIn,
+        userData,
+        getUser
     }
 })

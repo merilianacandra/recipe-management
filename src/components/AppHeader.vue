@@ -1,17 +1,27 @@
+<script setup>
+import { useAuthStore } from '@/store/AuthStore';
+import { storeToRefs } from 'pinia';
+
+const store = useAuthStore()
+const { userData } = storeToRefs(store)
+</script>
+
 <template>
   <header class="px-5 py-3 border-bottom mb-4 shawdow">
     <div class="d-flex justify-content-between align-items-center">
       <RouterLink to="/">
-        <img
-          src="/public/images/logo.png"
-          alt="Tasty Recipes"
-          class="header-logo"
-        />
+        <img src="/public/images/logo.png" alt="Tasty Recipes" class="header-logo" />
       </RouterLink>
-      <RouterLink to="/signup" class="header-signup">
-        <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
-        <span class="header-text">Sign Up</span>
-      </RouterLink>
+      <div>
+        <RouterLink to="/user" class="header-signup" v-if="userData">
+          <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
+          <span class="header-text">{{ userData.firstname }} {{ userData.lastname }}</span>
+        </RouterLink>
+        <RouterLink to="/signup" class="header-signup" v-else>
+          <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
+          <span class="header-text">Sign Up</span>
+        </RouterLink>
+      </div>
     </div>
   </header>
 </template>
