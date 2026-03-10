@@ -1,3 +1,11 @@
+<script setup>
+const props = defineProps({
+  firstname: String,
+  lastname: String,
+  email: String
+})
+</script>
+
 <template>
     <div class="col-lg-9 mb-4">
         <ul class="list-group">
@@ -15,14 +23,12 @@
                     <div class="pe-4 me-4">
                         <p>Firstname</p>
                         <p>Last Name</p>
-                        <p>Username</p>
                         <p>Email</p>
                     </div>
                     <div class="ps-4 ms-4">
-                        <p>Jack</p>
-                        <p>Daniel</p>
-                        <p>jackdaniel</p>
-                        <p>jackdaniel@mail.com</p>
+                        <p>{{ props.firstname }}</p>
+                        <p>{{ props.lastname }}</p>
+                        <p>{{ props.email }}</p>
                     </div>
                 </div>
             </li>

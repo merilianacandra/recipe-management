@@ -1,9 +1,12 @@
 <script setup>
 import { useAuthStore } from '@/store/AuthStore';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
 const store = useAuthStore()
 const router = useRouter()
+
+const { userData, isLoading } = storeToRefs(store)
 
 const logout = () => {
   store.logout();
@@ -16,8 +19,8 @@ const logout = () => {
       <li class="list-group-item">
         <div class="d-flex align-items-center">
           <div class="ps-3">
-            <p class="my-0 fs-5 fw-semibold">Jack Daniel</p>
-            <p class="my-0 fs-6 text-secondary">jackdaniel@mail.com</p>
+            <p class="my-0 fs-5 fw-semibold">{{ userData.firstname }} {{ userData.lastname }}</p>
+            <p class="my-0 fs-6 text-secondary">{{ userData.email }}</p>
           </div>
         </div>
       </li>
