@@ -1,3 +1,15 @@
+<script setup>
+import { useAuthStore } from '@/store/AuthStore';
+import { useRouter } from 'vue-router';
+
+const store = useAuthStore()
+const router = useRouter()
+
+const logout = () => {
+  store.logout();
+  router.push("/")
+}
+</script>
 <template>
   <div class="col-lg-3 mb-4">
     <ul class="list-group">
@@ -18,7 +30,7 @@
       <li class="list-group-item user-menu">
        My Recipe
       </li>
-       <li class="list-group-item user-menu">
+       <li class="list-group-item user-menu" @click="logout()">
         Logout
       </li>
     </ul>

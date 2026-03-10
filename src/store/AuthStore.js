@@ -77,7 +77,7 @@ export const useAuthStore = defineStore("auth", () => {
 
             // Response Mapping
             for (let key in response.data) {
-                 const data = { id: key, ...response.data[key] }
+                const data = { id: key, ...response.data[key] }
                 if (data.userId === userId) {
                     userData.value = data
                 }
@@ -89,11 +89,20 @@ export const useAuthStore = defineStore("auth", () => {
         }
     }
 
+    const logout = () => {
+        Cookies.remove('userToken')
+        Cookies.remove('userId')
+        Cookies.remove('expiresIn')
+
+        userData.value = {}
+    }
+
     return {
         isLoading,
         signUp,
         signIn,
         userData,
-        getUser
+        getUser,
+        logout
     }
 })
