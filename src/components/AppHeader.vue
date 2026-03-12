@@ -13,7 +13,7 @@ const { userData } = storeToRefs(store)
         <img src="/public/images/logo.png" alt="Tasty Recipes" class="header-logo" />
       </RouterLink>
       <div>
-        <RouterLink to="/user" class="header-signup" v-if="userData">
+        <RouterLink to="/user" class="header-signup" v-if="userData.firstname">
           <img src="/public/images/user.png" alt="User Icon" class="ms-auto" />
           <span class="header-text">{{ userData.firstname }} {{ userData.lastname }}</span>
         </RouterLink>

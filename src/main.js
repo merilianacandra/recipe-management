@@ -33,9 +33,13 @@ router.beforeEach(async (to) => {
 
   if (userToken && Date.now() < Number(expiresIn)) {
     await store.getUser(userToken, userId)
+  } else {
+    if (to.path === "/user" || to.path === "/user/favorite-recipes" || to.path === "/user/my-recipes") {
+      return { path: '/login' }
+    }
+    return true
   }
 
-  return true
 })
 
 app.use(router)
