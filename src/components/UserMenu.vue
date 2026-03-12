@@ -25,15 +25,21 @@ const logout = () => {
         </div>
       </li>
       <li class="list-group-item user-menu">
-       Personal Info
+        <RouterLink to="/user" class="header-link-item">
+          Personal Info
+        </RouterLink>
       </li>
       <li class="list-group-item user-menu">
-        Favorited Recipes
+        <RouterLink to="/user/favorite-recipes" class="header-link-item">
+          Favorited Recipes
+        </RouterLink>
       </li>
       <li class="list-group-item user-menu">
-       My Recipe
+        <RouterLink to="/user/my-recipes" class="header-link-item">
+          My Recipe
+        </RouterLink>
       </li>
-       <li class="list-group-item user-menu" @click="logout()">
+      <li class="list-group-item user-menu" @click="logout()">
         Logout
       </li>
     </ul>
@@ -51,5 +57,10 @@ const logout = () => {
 
 .inactive-color {
   color: #404040;
+}
+
+.header-link-item {
+  color: #404040;
+  text-decoration: none;
 }
 </style>
