@@ -12,9 +12,9 @@ import { Icon } from "@iconify/vue";
                         <p class="my-0 text-secondary">Add your original recipe here</p>
                     </div>
                     <div>
-                        <button class="btn btn-ui-color-solid px-3 py-2 rounded-pill">
+                        <RouterLink class="btn btn-ui-color-solid px-3 py-2 rounded-pill" to="/user/add-recipe">
                             Add Recipe
-                        </button>
+                        </RouterLink>
                     </div>
                 </div>
             </li>
