@@ -9,10 +9,11 @@ import * as yup from 'yup';
 import { ref } from 'vue';
 import UiInputGroup from './UiInputGroup.vue';
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setFieldValue } = useForm({
     validateOnInput: true,
     initialValues: {
-        ingredients: ['']
+        ingredients: [''],
+        directions: ['']
     },
     validationSchema: yup.object({
         name: yup
@@ -39,16 +40,46 @@ const { handleSubmit } = useForm({
                 yup
                     .string()
                     .required('Ingredient wajib diisi')
-            )
-            .min(1, 'Minimal 1 ingredient')
+            ),
+        directions: yup
+            .array()
+            .of(
+                yup
+                    .string()
+                    .required('Directions wajib diisi')
+            ),
+        image: yup
+            .string()
+            .required("Gambar resep wajib diisi"),
     })
 })
+
+const { fields: ingredientsFields, push: ingredientsPush, remove: ingredientsRemove } = useFieldArray('ingredients')
+const { fields: directionsFields, push: directionsPush, remove: directionsRemove } = useFieldArray('directions')
+
+const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (error) => reject(error)
+    })
+}
+
+const onFileChange = async (e) => {
+    const file = e.target.files[0]
+
+    if (!file) return
+
+    const base64 = await toBase64(file)
+
+    setFieldValue('image', base64)
+}
 
 const submit = handleSubmit(async (values) => {
     console.log('values form', values);
 })
-
-const { remove, push, fields } = useFieldArray('ingredients')
 </script>
 
 <template>
@@ -58,6 +89,8 @@ const { remove, push, fields } = useFieldArray('ingredients')
                 Detail Resep
             </div>
             <div class="card-body">
+                <UiInput id="recipe-image" type="file" title="Gambar Resep" placeholder="Gambar Resep" name="image"
+                    class="mb-3" @change="onFileChange" />
                 <UiInput id="recipe-title" type="text" title="Nama Resep" placeholder="Nama Resep" name="name"
                     class="mb-3" />
                 <div class="row">
@@ -86,12 +119,28 @@ const { remove, push, fields } = useFieldArray('ingredients')
                 </div>
                 <div class="card-body">
                     <!-- Ingredients -->
-                    <UiInputGroup v-for="(field, index) in fields" :key="field.key" :id="`ingredient-${index}`"
-                        placeholder="Ingredient" :name="`ingredients[${index}]`" @add="push('')" @remove="remove(index)" :is-delete="fields.length === 1 && index === 0"/>
+                    <UiInputGroup v-for="(field, index) in ingredientsFields" :key="field.key"
+                        :id="`ingredient-${index}`" placeholder="Ingredient" :name="`ingredients[${index}]`"
+                        @add="ingredientsPush('')" @remove="ingredientsRemove(index)"
+                        :is-delete="ingredientsFields.length === 1 && index === 0" />
                 </div>
             </div>
         </div>
         <!-- Directions -->
+
+        <div class="mt-5">
+            <div class="card">
+                <div class="card-header">
+                    Directions
+                </div>
+                <div class="card-body">
+                    <!-- Ingredients -->
+                    <UiInputGroup v-for="(field, index) in directionsFields" :key="field.key" :id="`direction-${index}`"
+                        placeholder="Direction" :name="`directions[${index}]`" @add="directionsPush('')"
+                        @remove="directionsRemove(index)" :is-delete="directionsFields.length === 1 && index === 0" />
+                </div>
+            </div>
+        </div>
         <div class="mt-5">
             <UiButton title="Simpan Resep" type="submit" />
         </div>

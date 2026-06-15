@@ -10,7 +10,7 @@ const props = defineProps({
     isDelete: Boolean
 });
 
-const { value, errorMessage } = useField(props.name);
+const { value, errorMessage } = useField(() => props.name);
 </script>
 
 <template>
