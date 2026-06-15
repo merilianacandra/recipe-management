@@ -14,7 +14,7 @@ const { userData, isLoading } = storeToRefs(store)
     <div class="container-md my-5 py-5">
         <div class="row">
             <UserMenu />
-            <UserPersonalInfo :firstname="userData.firstname" :lastname="userData.lastname" :email="userData.email" />
+            <UserPersonalInfo :firstname="userData.firstname" :lastname="userData.lastname" :email="userData.email" :username="userData.username"/>
         </div>
     </div>
 </template>

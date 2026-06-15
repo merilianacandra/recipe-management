@@ -2,7 +2,8 @@
 const props = defineProps({
   firstname: String,
   lastname: String,
-  email: String
+  email: String,
+  username: String
 })
 </script>
 
@@ -23,11 +24,13 @@ const props = defineProps({
                     <div class="pe-4 me-4">
                         <p>Firstname</p>
                         <p>Last Name</p>
+                        <p>Username</p>
                         <p>Email</p>
                     </div>
                     <div class="ps-4 ms-4">
                         <p>{{ props.firstname }}</p>
                         <p>{{ props.lastname }}</p>
+                        <p>{{ props.username }}</p>
                         <p>{{ props.email }}</p>
                     </div>
                 </div>

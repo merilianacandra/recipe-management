@@ -29,6 +29,9 @@ const { handleSubmit } = useForm({
     lastname: yup
       .string()
       .required('Firstname wajib diisi!'),
+    username: yup
+      .string()
+      .required('Username wajib diisi!'),
     confirmPassword: yup
       .string()
       .required('Confirm Password wajib diisi!')
@@ -50,7 +53,7 @@ const submit = handleSubmit(async (values) => {
     await store.signUp(values);
     modal.value.show();
   } catch (err) {
-    console.log(err.message) 
+    console.log(err.message)
   }
 });
 </script>
@@ -68,6 +71,7 @@ const submit = handleSubmit(async (values) => {
           <form @submit.prevent="submit">
             <UiInput id="firstname" type="text" title="First Name" name="firstname" class="mb-3" />
             <UiInput id="lastname" type="text" title="Last Name" name="lastname" class="mb-3" />
+            <UiInput id="username" type="text" title="Username" name="username" class="mb-3" />
             <UiInput id="email" type="email" title="Email Address" name="email" class="mb-3" />
             <UiInput id="password" type="password" title="Password" name="password" class="mb-3" />
             <UiInput id="confirm-password" type="password" title="Confirm Password" name="confirmPassword"
@@ -87,7 +91,8 @@ const submit = handleSubmit(async (values) => {
     <Vue3Lottie :animationData="CheckedJSON" :height="200" :width="200" />
     <div class="text-center mb-4">
       <h2>Pendaftaran Berhasil!</h2>
-      <p>Selamat! Akun Anda telah berhasil dibuat. Silakan <RouterLink to="/login" @click="modal.hide()">Login</RouterLink> menggunakan email dan kata sandi yang telah Anda
+      <p>Selamat! Akun Anda telah berhasil dibuat. Silakan <RouterLink to="/login" @click="modal.hide()">Login
+        </RouterLink> menggunakan email dan kata sandi yang telah Anda
         daftarkan.</p>
     </div>
   </UiModal>

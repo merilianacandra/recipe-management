@@ -29,7 +29,8 @@ export const useAuthStore = defineStore("auth", () => {
                 userId: response.data.localId,
                 email: response.data.email,
                 firstname: data.firstname,
-                lastname: data.lastname
+                lastname: data.lastname,
+                username: data.username
             }
 
             await postUserData(userData, userToken)
