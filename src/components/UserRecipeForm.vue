@@ -2,32 +2,54 @@
 import UiInput from './UiInput.vue';
 import UiDescription from './UiDescription.vue';
 import UiButton from './UiButton.vue';
+import UiSelect from './UiSelect.vue';
+import UiInputGroup from './UiInputGroup.vue';
 
 import { useFieldArray, useForm } from 'vee-validate';
 import * as yup from 'yup';
 
+import { useRecipeStore } from '@/store/RecipeStore.js';
+
 import { ref } from 'vue';
-import UiInputGroup from './UiInputGroup.vue';
+
+const categories = ref([
+    {
+        label: "Dinner",
+        value: "dinner",
+    },
+    {
+        label: "Lunch",
+        value: "lunch",
+    },
+    {
+        label: "Breakfast",
+        value: "breakfast",
+    }
+])
 
 const { handleSubmit, setFieldValue } = useForm({
     validateOnInput: true,
     initialValues: {
+        category: '',
         ingredients: [''],
         directions: ['']
     },
     validationSchema: yup.object({
-        name: yup
+        title: yup
             .string()
             .required("Nama resep wajib diisi"),
-        preptime: yup
+        category: yup
+            .string()
+            .required("Categori resep wajib diisi"),
+        prepTime: yup
             .number()
             .typeError('Input hanya boleh angka')
             .required('Waktu Persiapan wajib diisi'),
-        cooktime: yup
+        cookTime: yup
             .number()
             .typeError('Input hanya boleh angka')
             .required('Waktu Memasak wajib diisi'),
-        totaltime: yup
+        totalTime: yup
             .number()
             .typeError('Input hanya boleh angka')
             .required('Total Waktu Memasak wajib diisi'),
@@ -77,8 +99,13 @@ const onFileChange = async (e) => {
     setFieldValue('image', base64)
 }
 
+const store = useRecipeStore()
 const submit = handleSubmit(async (values) => {
-    console.log('values form', values);
+    try {
+        await store.addRecipe(values);
+    } catch (err) {
+        console.log(err)
+    }
 })
 </script>
 
@@ -91,20 +118,21 @@ const submit = handleSubmit(async (values) => {
             <div class="card-body">
                 <UiInput id="recipe-image" type="file" title="Gambar Resep" placeholder="Gambar Resep" name="image"
                     class="mb-3" @change="onFileChange" />
-                <UiInput id="recipe-title" type="text" title="Nama Resep" placeholder="Nama Resep" name="name"
+                <UiInput id="recipe-title" type="text" title="Nama Resep" placeholder="Nama Resep" name="title"
                     class="mb-3" />
+                <UiSelect :options="categories" name="category" title="Categori Resep" class="mb-3" />
                 <div class="row">
                     <div class="col-lg-4">
                         <UiInput id="recipe-preptime" type="text" title="Waktu Persiapan" placeholder="Waktu Persiapan"
-                            name="preptime" class="mb-3" />
+                            name="prepTime" class="mb-3" />
                     </div>
                     <div class="col-lg-4">
                         <UiInput id="recipe-cooktime" type="text" title="Waktu Memasak" placeholder="Waktu Memasak"
-                            name="cooktime" class="mb-3" />
+                            name="cookTime" class="mb-3" />
                     </div>
                     <div class="col-lg-4">
                         <UiInput id="recipe-totaltime" type="text" title="Total Waktu Memasak"
-                            placeholder="Total Waktu Memasak" name="totaltime" class="mb-3" />
+                            placeholder="Total Waktu Memasak" name="totalTime" class="mb-3" />
                     </div>
                 </div>
                 <UiDescription id="description" title="Deskripsi Resep" placeholder="Deskripsi Resep"

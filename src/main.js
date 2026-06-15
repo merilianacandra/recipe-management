@@ -39,7 +39,6 @@ router.beforeEach(async (to) => {
     }
     return true
   }
-
 })
 
 app.use(router)
