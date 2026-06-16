@@ -59,7 +59,7 @@ export const useRecipeStore = defineStore("recipe", () => {
         await axios.post(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?auth=${userToken}`, 
           { 
             ...data,
-            createdBy: `${userData.username}`,
+            createdBy: `${userData.value.username}`,
             createdAt: Date.now(),
             likes: ["null"]
           }
