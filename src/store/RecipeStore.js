@@ -83,7 +83,7 @@ export const useRecipeStore = defineStore("recipe", () => {
       const response = await axios.get(
         `https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?orderBy="userId"&equalTo="${userId}"`
       );
-      
+      recipes.value = []
       for (let key in response.data) {
         const data = { id: key, ...response.data[key] }
         recipes.value.push(data)
