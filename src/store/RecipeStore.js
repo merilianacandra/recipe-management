@@ -56,8 +56,8 @@ export const useRecipeStore = defineStore("recipe", () => {
     try {
       isLoading.value = true
       if (userToken && Date.now() < Number(expiresIn)) {
-        await axios.post(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?auth=${userToken}`, 
-          { 
+        await axios.post(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?auth=${userToken}`,
+          {
             ...data,
             createdBy: `${userData.value.username}`,
             createdAt: Date.now(),
@@ -70,7 +70,26 @@ export const useRecipeStore = defineStore("recipe", () => {
         router.push("/login")
       }
     } catch (error) {
+      console.log(error)
+    } finally {
+      isLoading.value = false
+    }
+  }
 
+  const getRecipeByUserId = async (data) => {
+    try {
+      isLoading.value = true
+      const userId = userData.value.userId
+      const response = await axios.get(
+        `https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?orderBy="userId"&equalTo="${userId}"`
+      );
+      
+      for (let key in response.data) {
+        const data = { id: key, ...response.data[key] }
+        recipes.value.push(data)
+      }
+    } catch (error) {
+      console.log(error)
     } finally {
       isLoading.value = false
     }
@@ -83,6 +102,7 @@ export const useRecipeStore = defineStore("recipe", () => {
     getRecipes,
     getRecipeDetail,
     recipe,
-    addRecipe
+    addRecipe,
+    getRecipeByUserId
   };
 });

@@ -1,5 +1,13 @@
 <script setup>
 import { Icon } from "@iconify/vue";
+import { useRecipeStore } from "@/store/RecipeStore";
+import { storeToRefs } from "pinia";
+import UiSpinner from '@/components/UiSpinner.vue';
+
+const store = useRecipeStore()
+const { recipes, isloading } = storeToRefs(store)
+
+store.getRecipeByUserId()
 </script>
 
 <template>
@@ -20,26 +28,27 @@ import { Icon } from "@iconify/vue";
             </li>
             <li class="list-group-item">
                 <p class="mt-2 mb-4 fs-5 fw-semibold">Recipe</p>
+                <UiSpinner v-if="isloading" />
                 <div class="row">
-                    <div class="col-md-6 col-12 my-2">
+                    <div class="col-md-6 col-12 my-2" v-for="item in recipes" :key="item.id">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <p class="mb-0">Recipe Category</p>
+                                        <p class="mb-0">{{ item.category }}</p>
                                         <div class="h-50">
-                                            <h4 class="fs-5 mb-0">Recipe Name</h4>
+                                            <h4 class="fs-5 mb-0">{{ item.title }}</h4>
                                         </div>
-                                        <p>Description</p>
+                                        <p>{{ item.description }}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <img src="https://placehold.co/200x100" alt="" width="90" height="80"
-                                            class="rounded" style="object-fit: cover">
+                                        <img :src="item.image" alt="" width="90" height="80" class="rounded"
+                                            style="object-fit: cover">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-3 pt-3 border-top">
                                     <button class="btn px-3 py-2">
-                                       <Icon icon="ri:ball-pen-line" width="24" height="24" color="#5C3E94" />
+                                        <Icon icon="ri:ball-pen-line" width="24" height="24" color="#5C3E94" />
                                     </button>
                                     <button class="btn px-3 py-2">
                                         <Icon icon="ri:delete-bin-6-line" width="24" height="24" color="#5C3E94" />
@@ -56,8 +65,8 @@ import { Icon } from "@iconify/vue";
 
 <style scoped>
 .btn-ui-color-solid {
-  background-color: #5c3e94;
-  color: #ffffff;
-  transition: background-color .3s ease;
+    background-color: #5c3e94;
+    color: #ffffff;
+    transition: background-color .3s ease;
 }
 </style>
