@@ -61,6 +61,7 @@ export const useRecipeStore = defineStore("recipe", () => {
             ...data,
             createdBy: `${userData.value.username}`,
             createdAt: Date.now(),
+            userId: userData.value.userId,
             likes: ["null"]
           }
         )
