@@ -6,6 +6,7 @@ import UserPersonalInfo from './views/UserPersonalInfo.vue';
 import UserFavoritedRecipes from './views/UserFavoritedRecipes.vue';
 import UserMyRecipes from './views/UserMyRecipes.vue';
 import UserAddRecipe from './views/UserAddRecipe.vue';
+import UserEditRecipe from './views/UserEditRecipe.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -15,7 +16,8 @@ const routes = [
   { path: '/user', component: UserPersonalInfo },
   { path: '/user/favorite-recipes', component: UserFavoritedRecipes },
   { path: '/user/my-recipes', component: UserMyRecipes },
-  { path: '/user/add-recipe', component: UserAddRecipe }
+  { path: '/user/add-recipe', component: UserAddRecipe },
+  { path: '/user/recipe/:id', component: UserEditRecipe }
 ]
 
 export default routes;
