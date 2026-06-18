@@ -47,7 +47,7 @@ store.getRecipeByUserId()
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-3 pt-3 border-top">
-                                    <button class="btn px-3 py-2">
+                                    <button class="btn px-3 py-2" @click="$router.push(`/user/recipe/${item.id}`)">
                                         <Icon icon="ri:ball-pen-line" width="24" height="24" color="#5C3E94" />
                                     </button>
                                     <button class="btn px-3 py-2">

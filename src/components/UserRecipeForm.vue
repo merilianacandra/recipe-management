@@ -4,13 +4,18 @@ import UiDescription from './UiDescription.vue';
 import UiButton from './UiButton.vue';
 import UiSelect from './UiSelect.vue';
 import UiInputGroup from './UiInputGroup.vue';
+import UiModal from './UiModal.vue';
+import UiCustomFileInput from './UiCustomFileInput.vue';
 
 import { useFieldArray, useForm } from 'vee-validate';
 import * as yup from 'yup';
 
 import { useRecipeStore } from '@/store/RecipeStore.js';
 
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+
+import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
 const categories = ref([
     {
@@ -27,7 +32,7 @@ const categories = ref([
     }
 ])
 
-const { handleSubmit, setFieldValue } = useForm({
+const { handleSubmit, setFieldValue, setValues } = useForm({
     validateOnInput: true,
     initialValues: {
         category: '',
@@ -79,32 +84,34 @@ const { handleSubmit, setFieldValue } = useForm({
 const { fields: ingredientsFields, push: ingredientsPush, remove: ingredientsRemove } = useFieldArray('ingredients')
 const { fields: directionsFields, push: directionsPush, remove: directionsRemove } = useFieldArray('directions')
 
-const toBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-
-        reader.onload = () => resolve(reader.result)
-        reader.onerror = (error) => reject(error)
-    })
-}
-
-const onFileChange = async (e) => {
-    const file = e.target.files[0]
-
-    if (!file) return
-
-    const base64 = await toBase64(file)
-
-    setFieldValue('image', base64)
-}
-
 const store = useRecipeStore()
+
+// If Edit 
+const route = useRoute()
+const router = useRouter()
+const isEdit = computed(() => !!route.params.id)
+const { recipe } = storeToRefs(store)
+const recipeImage = ref('')
+
+onMounted(async () => {
+    if (isEdit.value) {
+        await store.getRecipeDetail(route.params.id)
+        setValues(recipe.value)
+        recipeImage.value = recipe.value.image
+    }
+})
+
 const submit = handleSubmit(async (values) => {
     try {
-        await store.addRecipe(values);
+        if (isEdit.value) {
+            await store.updateRecipe(route.params.id, values)
+        } else {
+            await store.addRecipe(values)
+        }
     } catch (err) {
         console.log(err)
+    } finally {
+        router.push('/user/my-recipes')
     }
 })
 </script>
@@ -116,10 +123,12 @@ const submit = handleSubmit(async (values) => {
                 Detail Resep
             </div>
             <div class="card-body">
-                <UiInput id="recipe-image" type="file" title="Gambar Resep" placeholder="Gambar Resep" name="image"
-                    class="mb-3" @change="onFileChange" />
+                <UiCustomFileInput class="mb-3" placeholder="Gambar Resep" name="image"
+                    id="recipe-image" />
+                    
                 <UiInput id="recipe-title" type="text" title="Nama Resep" placeholder="Nama Resep" name="title"
                     class="mb-3" />
+
                 <UiSelect :options="categories" name="category" title="Categori Resep" class="mb-3" />
                 <div class="row">
                     <div class="col-lg-4">
@@ -170,7 +179,11 @@ const submit = handleSubmit(async (values) => {
             </div>
         </div>
         <div class="mt-5">
-            <UiButton title="Simpan Resep" type="submit" />
+            <UiButton :title="isEdit ? 'Update Resep' : 'Simpan Resep'" type="submit" />
         </div>
     </form>
+
+    <UiModal id="imageModal">
+
+    </UiModal>
 </template>
