@@ -76,12 +76,12 @@ export const useRecipeStore = defineStore("recipe", () => {
     }
   }
 
-  const getRecipeByUserId = async (data) => {
+  const getRecipeByUserId = async () => {
     try {
       isLoading.value = true
       const userId = userData.value.userId
       const response = await axios.get(
-        `https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?orderBy="userId"&equalTo="${userId}"`
+        `${import.meta.env.VITE_FIREBASE_URL}/recipes.json?orderBy="userId"&equalTo="${userId}"`
       );
       recipes.value = []
       for (let key in response.data) {
