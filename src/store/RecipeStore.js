@@ -25,7 +25,7 @@ export const useRecipeStore = defineStore("recipe", () => {
   const getRecipes = async () => {
     try {
       isLoading.value = true
-      const response = await axios.get('https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json')
+      const response = await axios.get(`${import.meta.env.VITE_FIREBASE_URL}/recipes.json`)
       // Response Mapping
       for (let key in response.data) {
         const data = { id: key, ...response.data[key] }
@@ -41,7 +41,7 @@ export const useRecipeStore = defineStore("recipe", () => {
   const getRecipeDetail = async (id) => {
     try {
       isLoading.value = true
-      const response = await axios.get(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${id}.json`)
+      const response = await axios.get(`${import.meta.env.VITE_FIREBASE_URL}/recipes/${id}.json`)
       recipe.value = response.data
     } catch (error) {
       console.log(error)
@@ -57,13 +57,12 @@ export const useRecipeStore = defineStore("recipe", () => {
       const expiresIn = Cookies.get('expiresIn')
 
       if (userToken && Date.now() < Number(expiresIn)) {
-        await axios.post(`https://fe-recipe-v3-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json?auth=${userToken}`,
-          {
+        await axios.post(`${import.meta.env.VITE_FIREBASE_URL}/recipes.json?auth=${userToken}`, 
+          { 
             ...data,
             createdBy: `${userData.value.username}`,
             createdAt: Date.now(),
-            userId: userData.value.userId,
-            likes: ["null"]
+            userId: userData.value.userId
           }
         )
         router.push('/user/my-recipes')
